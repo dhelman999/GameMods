@@ -324,6 +324,11 @@ namespace QuickSave
 					string path = ((Plugin.SaveFolderName.Value == "") ? gameId : Plugin.SaveFolderName.Value);
 					string directory = Path.Combine(directoryName, path);
 					List<string> allFilePaths = QuickSaveFunctions.GetAllFilePaths(directory);
+					if (allFilePaths == null || allFilePaths.Count == 0)
+					{
+						Plugin.LogDebug("loadgame - no saves under " + directory + " (save once first after a reseed).");
+						break;
+					}
 					Plugin.LogDebug("initialized dropdown");
 					loadgameDropdown.ClearOptions();
 					loadgameDropdown.AddOptions(allFilePaths);

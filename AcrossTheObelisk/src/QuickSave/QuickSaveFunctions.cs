@@ -135,12 +135,27 @@ namespace QuickSave
 
 		public static void QuickLoad()
 		{
+			if (string.IsNullOrEmpty(quickLoadFilename))
+			{
+				Plugin.LogDebug("QuickLoad - no quick-save yet this session (save once first).");
+				return;
+			}
+			if (!File.Exists(quickLoadFilename))
+			{
+				Plugin.LogDebug("QuickLoad - file missing: " + quickLoadFilename);
+				return;
+			}
 			Plugin.LogDebug("attempting to load" + quickLoadFilename);
 			LoadGameFromFilename(quickLoadType, quickLoadFilename, quickLoadFilenameGameForTurn);
 		}
 
 		public static void LoadGameFromFilename(LoadType loadType, string filePath, string filePathToGameIfTurn = "")
 		{
+			if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+			{
+				Plugin.LogDebug("LoadGameFromFilename - missing file: " + (filePath ?? "(null)"));
+				return;
+			}
 			int saveSlot = SaveManager.Instance.GetSaveSlot();
 			string directoryName = Path.GetDirectoryName(SaveManager.Instance.PathSaveGameTurn(saveSlot));
 			switch (loadType)
@@ -149,7 +164,7 @@ namespace QuickSave
 			{
 				string destFileName = Path.Combine(directoryName, $"gamedata_{saveSlot}.ato");
 				string path = Path.Combine(directoryName, $"gamedata_{saveSlot}_turn.ato");
-				if (File.Exists(filePathToGameIfTurn))
+				if (!string.IsNullOrEmpty(filePathToGameIfTurn) && File.Exists(filePathToGameIfTurn))
 				{
 					File.Copy(filePathToGameIfTurn, destFileName, overwrite: true);
 				}
@@ -232,6 +247,11 @@ namespace QuickSave
 
 		public static List<string> GetAllFilePaths(string directory)
 		{
+			if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
+			{
+				Plugin.LogDebug("GetAllFilePaths - directory missing: " + (directory ?? "(null)"));
+				return new List<string>();
+			}
 			string text = ".ato";
 			return (from f in Directory.GetFiles(directory, "*" + text, SearchOption.AllDirectories)
 				orderby File.GetLastWriteTime(f) descending

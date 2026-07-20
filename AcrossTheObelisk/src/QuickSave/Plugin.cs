@@ -101,6 +101,6 @@ namespace QuickSave
 
 		public const string PLUGIN_NAME = "QuickSave";
 
-		public const string PLUGIN_VERSION = "1.2.1.2";
+		public const string PLUGIN_VERSION = "1.2.1.3";
 	}
 }
