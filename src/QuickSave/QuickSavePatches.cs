@@ -23,6 +23,8 @@ namespace QuickSave
 
 		public static Transform iconSkipCorruptor;
 
+		public static Transform iconResetSeed;
+
 		public static Transform iconSaveGame;
 
 		public static Transform iconSaveTurn;
@@ -65,6 +67,7 @@ namespace QuickSave
 			iconQuickLoad = QuickSaveFunctions.CreateIcon(__instance.iconSettings, "quickload", myButtonsMap);
 			iconLoadGame = QuickSaveFunctions.CreateIcon(__instance.iconStats, "loadgame", myButtonsMap);
 			iconSaveGame = QuickSaveFunctions.CreateIcon(__instance.iconTome, "savegame", myButtonsMap);
+			iconResetSeed = QuickSaveFunctions.CreateIcon(__instance.iconRetry, "resetseed", myButtonsMap);
 			iconReloadTurn = QuickSaveFunctions.CreateIcon(__instance.iconRetry, "reloadturn", myButtonsCombat);
 			iconSaveTurn = QuickSaveFunctions.CreateIcon(__instance.iconTome, "saveturn", myButtonsCombat);
 			iconLoadGame2 = QuickSaveFunctions.CreateIcon(__instance.iconStats, "loadgame", myButtonsCombat);
@@ -144,6 +147,16 @@ namespace QuickSave
 			else if ((bool)MapManager.Instance && (QuickSaveFunctions.isHost || !QuickSaveFunctions.isMP))
 			{
 				QuickSaveFunctions.SetButtons(myButtonsMap, active: true);
+			}
+			// Reset Seed is only meaningful before the run really begins (starting town,
+			// no combat resolved yet). Reseeding after the first battle would require
+			// restarting the whole game, so we hide the button once progress exists.
+			if (iconResetSeed != null)
+			{
+				if (!QuickSaveFunctions.ResetSeedAllowed())
+				{
+					iconResetSeed.gameObject.SetActive(value: false);
+				}
 			}
 			float num = 0.95f;
 			float num2 = 0.65f;
@@ -320,6 +333,9 @@ namespace QuickSave
 				}
 				case "quickload":
 					QuickSaveFunctions.QuickLoad();
+					break;
+				case "resetseed":
+					QuickSaveFunctions.HandleResetSeed();
 					break;
 				case "skipcorruptor":
 					skipCorruption = true;

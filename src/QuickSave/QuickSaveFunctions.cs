@@ -313,10 +313,56 @@ namespace QuickSave
 			}
 		}
 
-		// NOTE: HandleResetSeed / 2 / 3 / 4 removed. They were dead code (no "resetseed"
-		// button is created; the seed reset feature was moved to the Definite Seeds mod per
-		// the changelog) and they used AtOManager methods that the 2026-07-09 update removed
-		// (GetTeam / heroPerks / SetTeamFromArray / SetPlayerGold / SetPlayerDust / SetPlayerPerks).
+		// Reset Seed (reimplemented for the 2026-07-09 build).
+		//
+		// The old mod had four HandleResetSeed variants; only the "save + reload with a new
+		// gameId" one (formerly HandleResetSeed4) is needed for the "reroll the starting path"
+		// workflow, and its APIs all still exist after the July update (SaveGame/LoadGame/
+		// GetSaveSlot moved AtOManager -> SaveManager; SetGameId/GetGameId stayed on AtOManager).
+		// The team-rebuilding variant is intentionally NOT restored: it relied on AtOManager
+		// methods the update removed (GetTeam/SetTeamFromArray/SetPlayerGold/Dust/Perks) and is
+		// unnecessary for rerolling before the first battle.
+		//
+		// Map node contents (combats/events/rewards) are derived deterministically from the
+		// gameId, so rolling a new seed and reloading regenerates the not-yet-resolved path.
+		// This only makes sense before anything is locked in, hence ResetSeedAllowed().
+
+		public static bool ResetSeedAllowed()
+		{
+			try
+			{
+				return Plugin.EnableResetSeed != null && Plugin.EnableResetSeed.Value
+					&& AtOManager.Instance != null
+					&& AtOManager.Instance.monstersKilled == 0
+					&& AtOManager.Instance.bossesKilled == 0;
+			}
+			catch (Exception ex)
+			{
+				Plugin.LogError("ResetSeedAllowed check failed: " + ex);
+				return false;
+			}
+		}
+
+		public static void HandleResetSeed()
+		{
+			if (AtOManager.Instance == null || SaveManager.Instance == null)
+			{
+				Plugin.LogDebug("HandleResetSeed - null manager, aborting.");
+				return;
+			}
+			if (!ResetSeedAllowed())
+			{
+				Plugin.LogDebug("HandleResetSeed - not allowed (run already in progress), ignoring.");
+				return;
+			}
+			string oldSeed = AtOManager.Instance.GetGameId();
+			AtOManager.Instance.SetGameId();
+			string newSeed = AtOManager.Instance.GetGameId();
+			Plugin.LogDebug("HandleResetSeed - reseeded '" + oldSeed + "' -> '" + newSeed + "'");
+			int slot = SaveManager.Instance.GetSaveSlot();
+			SaveManager.Instance.SaveGame(-1, false);
+			SaveManager.Instance.LoadGame(slot, false);
+		}
 
 		public static void HSMStartLocal(HeroSelectionManager __instance)
 		{

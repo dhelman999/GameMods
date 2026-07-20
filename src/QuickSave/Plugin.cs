@@ -38,6 +38,8 @@ namespace QuickSave
 
 		public static ConfigEntry<bool> DisableControlClick { get; set; }
 
+		public static ConfigEntry<bool> EnableResetSeed { get; set; }
+
 		private void Awake()
 		{
 			Log = base.Logger;
@@ -48,6 +50,7 @@ namespace QuickSave
 			MidCombatHorizontalShift = base.Config.Bind(new ConfigDefinition("Quick Save", "Mid Combat UI Shift"), 100f, new ConfigDescription("Shifts the UI to the right in combat. More positive is more to the right, more negative is more to the left. A value of 100 will shift the UI one \"Icon\" to the right.", null));
 			SaveFolderName = base.Config.Bind(new ConfigDefinition("Quick Save", "Save Folder Name"), "", new ConfigDescription("Sets the name of your save folder. If left blank, the current seed will be used instead.", null));
 			DisableControlClick = base.Config.Bind(new ConfigDefinition("Quick Save", "Disable Control Key Click"), defaultValue: false, new ConfigDescription("If selected, disables the control keys from clicking.", null));
+			EnableResetSeed = base.Config.Bind(new ConfigDefinition("Quick Save", "Enable Reset Seed Button"), defaultValue: true, new ConfigDescription("Adds a Reset Seed button in the starting town (before your first battle) that rolls a new game seed and regenerates the map, so you can reroll the path/quests until you find one you like.", null));
 			PluginName = PluginInfo.PLUGIN_NAME;
 			PluginVersion = PluginInfo.PLUGIN_VERSION;
 			PluginGUID = PluginInfo.PLUGIN_GUID;
@@ -98,6 +101,6 @@ namespace QuickSave
 
 		public const string PLUGIN_NAME = "QuickSave";
 
-		public const string PLUGIN_VERSION = "1.2.1.1";
+		public const string PLUGIN_VERSION = "1.2.1.2";
 	}
 }

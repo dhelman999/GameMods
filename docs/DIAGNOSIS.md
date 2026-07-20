@@ -1,5 +1,8 @@
 # Quick_Save (Binbin) — TMM Debug Diagnosis
 
+> **Recovering / rebuilding?** This file explains *why* it broke. For the step-by-step *how to get
+> back to a working state* (after a Thunderstore or game update), see **[`REBUILD.md`](REBUILD.md)**.
+
 > ## RESOLVED (2026-07-20) ✅
 > Quick_Save works again on game build `24123647` (2026-07-09), with the Obeliskial framework
 > **disabled**, using our own rebuilt DLL (`com.binbin.quicksave` v1.2.1.1) from `src/QuickSave`.

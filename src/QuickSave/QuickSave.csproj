@@ -7,8 +7,8 @@
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
-    <AssemblyVersion>1.2.1.1</AssemblyVersion>
-    <FileVersion>1.2.1.1</FileVersion>
+    <AssemblyVersion>1.2.1.2</AssemblyVersion>
+    <FileVersion>1.2.1.2</FileVersion>
     <DebugType>portable</DebugType>
     <!-- Silence unused-field / obsolete noise from faithfully-ported game-API code. -->
     <NoWarn>$(NoWarn);CS0169;CS0649;CS0618;CS0114</NoWarn>
