@@ -1,0 +1,21 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+*.user
+
+# Deployed / backup DLLs
+*.stock.bak
+
+# Local backups of game-dir mod files (not source; can be regenerated)
+backups/
+
+# Captured runtime logs
+diagnostics/
+
+# Decompiled reference code (proprietary game/mod code; regenerate via scripts/decompile-*.ps1)
+refs/
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+.vs/
