@@ -9,15 +9,16 @@
       folders/zips, the .thunderstoremm marker, and Quick_Save's gamedata_*.ato turn saves).
 
     RUN AS ADMINISTRATOR:
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\backup-mod-files-round2.ps1
 #>
 
 $ErrorActionPreference = 'Stop'
 
+$projectRoot = Split-Path -Parent $PSScriptRoot
 $gameDir   = 'C:\Program Files (x86)\Steam\steamapps\common\Across the Obelisk'
 $stamp     = Get-Date -Format 'yyyyMMdd-HHmmss'
-$backupDir = Join-Path 'C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods\backups' "gamedir-modfiles-$stamp"
+$backupDir = Join-Path (Join-Path $projectRoot 'backups') "gamedir-modfiles-$stamp"
 
 # Name patterns that are unambiguously mod artifacts (never part of the vanilla game).
 $patterns = @(

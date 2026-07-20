@@ -4,12 +4,12 @@
     Decompiles the installed Quick_Save plugin DLL to a single C# file using the
     workspace AtoDecompile tool (ILSpy engine as a library). Read-only w.r.t. the game.
 
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\decompile-quicksave.ps1
 #>
 $ErrorActionPreference = 'Stop'
 
-$repo    = 'C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods'
+$repo    = Split-Path -Parent $PSScriptRoot
 $profile = Join-Path $env:APPDATA 'Thunderstore Mod Manager\DataFolder\AcrossTheObelisk\profiles\Default'
 $dll     = Join-Path $profile 'BepInEx\plugins\Binbin-Quick_Save\com.binbin.quicksave.dll'
 $out     = Join-Path $repo 'refs\QuickSave-src\com.binbin.quicksave.cs'

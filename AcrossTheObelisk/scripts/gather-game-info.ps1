@@ -7,7 +7,7 @@
       - Versions of mods currently installed in the active TMM profile (from mods.yml)
 
     Safe to run any time (no changes made). Admin not required.
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\gather-game-info.ps1
 #>
 

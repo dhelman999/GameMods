@@ -10,15 +10,16 @@
 
     RUN AS ADMINISTRATOR (the game lives under "Program Files (x86)").
     Right-click PowerShell -> "Run as administrator", then:
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\backup-mod-files.ps1
 #>
 
 $ErrorActionPreference = 'Stop'
 
+$projectRoot = Split-Path -Parent $PSScriptRoot
 $gameDir   = 'C:\Program Files (x86)\Steam\steamapps\common\Across the Obelisk'
 $stamp     = Get-Date -Format 'yyyyMMdd-HHmmss'
-$backupDir = Join-Path 'C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods\backups' "gamedir-modfiles-$stamp"
+$backupDir = Join-Path (Join-Path $projectRoot 'backups') "gamedir-modfiles-$stamp"
 
 # Known BepInEx + Obeliskial mod artifacts that a manual/TMM install leaves in the game folder.
 # These are NOT part of the vanilla game, so moving them yields a clean install.

@@ -4,16 +4,17 @@
     Builds the workspace QuickSave mod and deploys the DLL into the active TMM profile,
     backing up the stock DLL the first time.
 
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\build-mod.ps1
 #>
 $ErrorActionPreference = 'Stop'
 
-$repo      = 'C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods'
-$proj      = Join-Path $repo 'src\QuickSave\QuickSave.csproj'
-$profile   = Join-Path $env:APPDATA 'Thunderstore Mod Manager\DataFolder\AcrossTheObelisk\profiles\Default'
-$pluginDir = Join-Path $profile 'BepInEx\plugins\Binbin-Quick_Save'
-$dllName   = 'com.binbin.quicksave.dll'
+# This script lives in AcrossTheObelisk/scripts/ — project root is the parent folder.
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$proj        = Join-Path $projectRoot 'src\QuickSave\QuickSave.csproj'
+$profile     = Join-Path $env:APPDATA 'Thunderstore Mod Manager\DataFolder\AcrossTheObelisk\profiles\Default'
+$pluginDir   = Join-Path $profile 'BepInEx\plugins\Binbin-Quick_Save'
+$dllName     = 'com.binbin.quicksave.dll'
 
 Write-Host "Building QuickSave (workspace build)..." -ForegroundColor Cyan
 dotnet build $proj -c Release --nologo
@@ -22,7 +23,7 @@ if ($LASTEXITCODE -ne 0) {
     return
 }
 
-$built = Join-Path $repo 'src\QuickSave\bin\Release\netstandard2.1\com.binbin.quicksave.dll'
+$built = Join-Path $projectRoot 'src\QuickSave\bin\Release\netstandard2.1\com.binbin.quicksave.dll'
 if (-not (Test-Path $built)) { Write-Error "Built DLL not found: $built"; return }
 
 if (-not (Test-Path $pluginDir)) { Write-Error "Plugin folder not found (install Quick_Save via TMM first): $pluginDir"; return }

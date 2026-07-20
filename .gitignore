@@ -1,19 +1,19 @@
-# Build output
-[Bb]in/
-[Oo]bj/
+# Build output (any game subproject)
+**/[Bb]in/
+**/[Oo]bj/
 *.user
 
 # Deployed / backup DLLs
 *.stock.bak
 
-# Local backups of game-dir mod files (not source; can be regenerated)
-backups/
+# Local backups of game-dir mod files (not source; regenerable)
+**/backups/
 
 # Captured runtime logs
-diagnostics/
+**/diagnostics/
 
-# Decompiled reference code (proprietary game/mod code; regenerate via scripts/decompile-*.ps1)
-refs/
+# Decompiled reference code (proprietary; regenerate via each game's decompile scripts)
+**/refs/
 
 # OS / editor cruft
 Thumbs.db

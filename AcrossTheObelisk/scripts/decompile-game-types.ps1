@@ -4,12 +4,12 @@
     Decompiles specific game types from the CURRENT Assembly-CSharp.dll so we can see the
     up-to-date API (which methods moved where in the 2026-07-09 update).
 
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\decompile-game-types.ps1
 #>
 $ErrorActionPreference = 'Stop'
 
-$repo    = 'C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods'
+$repo    = Split-Path -Parent $PSScriptRoot
 $managed = 'C:\Program Files (x86)\Steam\steamapps\common\Across the Obelisk\AcrossTheObelisk_Data\Managed'
 $asm     = Join-Path $managed 'Assembly-CSharp.dll'
 $out     = Join-Path $repo 'refs\game-types.cs'

@@ -3,16 +3,17 @@
     Copies the active TMM profile's BepInEx log into .\diagnostics with a timestamp,
     so it can be reviewed/shared. Read-only w.r.t. the game; only copies.
 
-        cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+        cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
         powershell -ExecutionPolicy Bypass -File .\scripts\grab-log.ps1
 #>
 $ErrorActionPreference = 'SilentlyContinue'
 
-$profile = Join-Path $env:APPDATA 'Thunderstore Mod Manager\DataFolder\AcrossTheObelisk\profiles\Default'
-$log     = Join-Path $profile 'BepInEx\LogOutput.log'
-$destDir = 'C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods\diagnostics'
-$stamp   = Get-Date -Format 'yyyyMMdd-HHmmss'
-$dest    = Join-Path $destDir "LogOutput-$stamp.log"
+$projectRoot = Split-Path -Parent $PSScriptRoot
+$profile     = Join-Path $env:APPDATA 'Thunderstore Mod Manager\DataFolder\AcrossTheObelisk\profiles\Default'
+$log         = Join-Path $profile 'BepInEx\LogOutput.log'
+$destDir     = Join-Path $projectRoot 'diagnostics'
+$stamp       = Get-Date -Format 'yyyyMMdd-HHmmss'
+$dest        = Join-Path $destDir "LogOutput-$stamp.log"
 
 New-Item -ItemType Directory -Force -Path $destDir | Out-Null
 

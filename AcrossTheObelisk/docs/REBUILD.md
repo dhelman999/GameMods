@@ -12,7 +12,7 @@ Most breakages are one of two things: (a) TMM re-downloaded the stock Quick_Save
 our build, or (b) a game update moved/renamed an API our code calls. Recovery:
 
 ```powershell
-cd "C:\Users\dhelm\source\repos\AcrossTheObelisk-Mods"
+cd "C:\Users\dhelm\source\repos\GameMods\AcrossTheObelisk"
 
 # 1. Rebuild our DLL against the CURRENTLY INSTALLED game DLLs and redeploy it.
 powershell -ExecutionPolicy Bypass -File .\scripts\build-mod.ps1
